@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>How could wildfire affect air quality in California</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style_all.css"/>
+    <link rel="stylesheet" href="sliders.css"/>
+    <link rel="stylesheet" href="viz.css"/>
+    <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <a href="#visualization"><h1>How does wildfires affect air quality in California?</h1></a>
+        </div>
+        <p class="proj-desc">
+            <!--Let's find out whether the air quality in China become better or worse from this visualization based on AQI data from 2014 to 2016.-->
+        </p>
+        <div id="visualization"></div>
+        <div id="viz-bottom" class="noselect"></div>
+        <div id="checkbox-list" class="noselect"></div>
+        <div class="below-viz-slider" style="display: flex">
+            <div id="slider_holder" class="holder noselect"></div>
+            <div class="btn-control-div">
+                <input id="toggle-autoplay" type="checkbox" data-on="<i class='fa fa-play'></i> AutoPlay On" data-off="<i class='fa fa-pause'></i> AutoPlay Off" data-onstyle="success">
+            </div>
+            <div class="btn-control-div"><button class="btn btn-success" onclick="reset_zoom()">Reset</button></div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12  created_by">
+                <h4 class="footer-header">Created by</h4>
+                <p>
+                    <span><a href="#">Han Gao</a></span>, <span>Email: hgao16@ucsc.edu</span><br>
+                </p>
+                <h4 class="footer-header">Designed for</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 footer_column footer-files">
+                <h4 class="footer-header">Files Submitted</h4>
+                <ul>
+                    <li>index.html</li>
+                    <li>viz.js</li>
+                    <li>slider.js</li>
+                    <li>aqi_for_geo.json</li>
+                    <li>counties.json</li>
+                    <li>aqi_desc.json</li>
+                    <li>style_all.css</li>
+                    <li>winter.png</li>
+                    <li>summer.png</li>
+                </ul>
+            </div>
+            <div class="col-md-3 footer_column">
+                <h4 class="footer-header">Data Sources</h4>
+                <ul>
+                    <li>
+                        <a href="http://cdfdata.fire.ca.gov/incidents/incidents_cur_search_results?search=">
+                            Air Quality Index (AQI) Basics
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www2.census.gov/geo/tiger/GENZ2017/shp/">
+                            California Boundaries
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://cdfdata.fire.ca.gov/incidents/incidents_cur_search_results?search=/">
+                            Fire Incident Information
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.epa.gov/outdoor-air-quality-data/air-quality-index-daily-values-report/">
+                            Air Quality Index Daily Values Report
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 footer_column">
+                <h4 class="footer-header">Relevant Visualization Sources</h4>
+                <ul>
+                    <li>
+                        <a href="https://palmchou.github.io/ChinaAQITrend/">Air Quality Trend in China
+                        </a>
+                        by Shuai Zhou, Han Gao, Di Hu, Winter 2018
+                    </li>
+                    <li>
+                        <a href="https://sureshlodha.github.io/CMPS165_Fall2016_FinalProjects/CAWildfire/">
+                            Wildfires in California, 1895 - 2015
+                        </a>
+                        by Gavin Sonne, Kaio Barbosa, Wookjin Jang, Fall 2016
+                    </li>
+                    <li>
+                        <a href="https://sureshlodha.github.io/CMPS165_Spring2018/FinalProjects/CaliforniaWildfires/index-1.html">
+                            California Wildfires 2008 to 2016
+                        </a>
+                        by Brian Tran, Yinghao Wang, Spring 2018
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 footer_column">
+                <h4 class="footer-header">Code Sources</h4>
+                <ul>
+                    <li>
+                        <a href="https://github.com/bobhaslett/d3-v4-sliders">d3 v4 sliders</a>
+                    </li>
+                    <li>
+                        <a href="https://bl.ocks.org/mbostock/3970883">Gradient Colored Lines</a>
+                    </li>
+                    <li>
+                        <a href="https://bl.ocks.org/">bl.ocks.org</a>
+                    </li>
+                    <li>
+                        <a href="https://d3js.org/">d3js.org</a>
+                    </li>
+                    <li>
+                        <a href="http://www.w3schools.com/js/js_htmldom_nodes.asp" rel="stylesheet">w3schools.com</a>
+                    </li>
+                    <li>
+                        <a href="https://getbootstrap.com/docs/3.3/">Bootstrap</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+        integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+        crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+        integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+        crossorigin="anonymous"></script>
+<script src="slider.js"></script>
+<script src="viz.js"></script>
+</body>
+</html>

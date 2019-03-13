@@ -1,0 +1,70 @@
+g.counties path {
+    stroke: #000;
+    stroke-opacity: 0.2;
+}
+
+g.counties path.highlight {
+    stroke-opacity: 0.9;
+}
+
+/*Add Tooltip Type here*/
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    /*width: 180px;*/
+    /*height: 28px;*/
+    padding: 4px;
+    font: 12px sans-serif;
+    background: #b8f7d8;
+    border: 0;
+    border-radius: 4px;
+    pointer-events: none;
+    min-width: 100px;
+}
+
+div.tooltip span.cty-name {
+    font-weight: bold;
+}
+
+div.tooltip span.sp-left {
+    float:left;
+}
+div.tooltip span.sp-right {
+    float:right;
+}
+div.tooltip span.sp-center {
+    position: absolute;
+    left: 54%;
+}
+
+p.pollutant-desc {
+    max-width: 200px;
+    margin: 5px 0 3px 0;
+    text-align: left;
+}
+
+text.viz-title {
+    text-anchor: middle;
+    opacity: 0.9;
+}
+
+text.map-title {
+    font-size: 20px;
+}
+
+#viz-bottom, #checkbox-list{
+    display: inline-block;
+}
+
+#viz-bottom g.line-chart-lines > path {
+    fill: none;
+    stroke: black;
+}
+
+.aqi-checkbox > label {
+    margin-left: 5px;
+}
+
+#checkbox-list > li {
+    list-style-type: none;
+}

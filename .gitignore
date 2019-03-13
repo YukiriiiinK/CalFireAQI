@@ -1,0 +1,5 @@
+unused
+.idea
+venv
+data_process
+AQI_data/daily_objects.json
