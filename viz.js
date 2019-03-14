@@ -139,12 +139,8 @@ function fill_color(auto) {
 }
 
 // Legend
-function draw_color_legend(base_svg, x, color, domain, name, caption) {
-  x = x.domain(domain).rangeRound([220, 480]);
-
-  if (name === 'fire') {
-    window.xxx = x;
-  }
+function draw_color_legend(base_svg, scaler, color, domain, name, caption) {
+  scaler = scaler.domain(domain).rangeRound([220, 480]);
 
   var g = base_svg.append("g")
     .attr("class", "legend legend-" + name)
@@ -153,17 +149,17 @@ function draw_color_legend(base_svg, x, color, domain, name, caption) {
   var rect = g.selectAll("rect")
     .data(color.range().map(function (d) {
       d = color.invertExtent(d);
-      if (d[0] == null) d[0] = x.domain()[0];
-      if (d[1] == null) d[1] = x.domain()[1];
+      if (d[0] == null) d[0] = scaler.domain()[0];
+      if (d[1] == null) d[1] = scaler.domain()[1];
       return d;
     }))
     .enter().append("rect")
     .attr("height", 8)
     .attr("x", function (d) {
-      return x(d[0]);
+      return scaler(d[0]);
     })
     .attr("width", function (d) {
-      return x(d[1]) - x(d[0]);
+      return scaler(d[1]) - scaler(d[0]);
     })
     .attr("fill", function (d) {
       return color(d[0]);
@@ -191,14 +187,14 @@ function draw_color_legend(base_svg, x, color, domain, name, caption) {
 
   g.append("text")
     .attr("class", "caption")
-    .attr("x", x.range()[0])
+    .attr("x", scaler.range()[0])
     .attr("y", -6)
     .attr("fill", "#000")
     .attr("text-anchor", "start")
     .attr("font-weight", "bold")
     .text(caption);
 
-  g.call(d3.axisBottom(x)
+  g.call(d3.axisBottom(scaler)
     .tickSize(13)
     .tickValues(color.domain()))
     .select(".domain")
